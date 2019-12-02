@@ -8,7 +8,7 @@ namespace ActorDemo.ActorSystem
 {
     class Supervisor
     {
-
+        //Actor挂掉之后，重启
 
 
 

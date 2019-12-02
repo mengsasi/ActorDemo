@@ -17,11 +17,13 @@ namespace ActorDemo.ActorSystem
 
         ActorContext Context { get; }
 
-        void Execute();//执行
+        void Enqueue(MsgData data);
+
+        void Dequeue();
 
     }
 
-    public abstract class Actor<T> : IActor
+    public abstract class Actor : IActor
     {
 
         protected Actor()
@@ -51,18 +53,11 @@ namespace ActorDemo.ActorSystem
             }
         }
 
-        private Queue<T> messageQueue = new Queue<T>();
+        private Queue<MsgData> messageQueue = new Queue<MsgData>();
 
-        protected abstract void Receive(T message);
+        protected abstract void Receive(MsgData message);
 
-        public void Send(T message, string targetName)
-        {
-            if (exited)
-                return;
-            Dispatcher.Instance.ReadyToExecute(targetName);
-        }
-
-        public void Enqueue(T message)
+        void IActor.Enqueue(MsgData message)
         {
             if (exited)
                 return;
@@ -72,9 +67,9 @@ namespace ActorDemo.ActorSystem
             }
         }
 
-        void IActor.Execute()
+        void IActor.Dequeue()
         {
-            T message;
+            MsgData message;
             lock (messageQueue)
             {
                 message = messageQueue.Dequeue();

@@ -20,14 +20,24 @@ namespace ActorDemo
 
             for (int i = 0; i < 10000; i++)
             {
-                counter1.Send(i, "counter2");
+                MsgData data1 = new MsgData(i.ToString());
 
-                counter2.Send(10, "counter1");
+                Dispatcher.Instance.Send(data1, "counter2");
             }
 
-            counter1.Send(-1, "counter2");
+            for (int i = 0; i < 10000; i++)
+            {
+                MsgData data2 = new MsgData("=========");
 
-            counter2.Send(-1, "counter2");
+                Dispatcher.Instance.Send(data2, "counter1");
+            }
+
+
+            MsgData data = new MsgData("stop");
+
+            Dispatcher.Instance.Send(data, "counter1");
+
+            Dispatcher.Instance.Send(data, "counter2");
 
             Console.ReadLine();
 

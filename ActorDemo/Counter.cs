@@ -8,27 +8,25 @@ using ActorDemo.ActorSystem;
 namespace ActorDemo
 {
 
-    public class Counter : Actor<int>
+    public class Counter : Actor
     {
 
-        private int m_value;
+        private string m_value;
 
-        public Counter() : this(0) { }
+        public Counter() { }
 
-        public Counter(int initial)
+        protected override void Receive(MsgData message)
         {
-            m_value = initial;
-        }
+            string msg = message.UnPack();
 
-        protected override void Receive(int message)
-        {
-            m_value += message;
+            m_value += msg + "\n";
 
-            if (message == -1)
+            if (msg == "stop")
             {
                 Console.WriteLine(m_value);
                 Exit();
             }
+
         }
     }
 }
