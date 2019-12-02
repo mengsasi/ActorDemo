@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ActorDemo.ActorSystem
-{
+namespace ActorDemo.ActorSystem {
 
-    public class ActorContext
-    {
+    public class ActorContext {
 
-        public ActorContext(IActor actor)
-        {
+        public ActorContext( IActor actor ) {
             Actor = actor;
         }
 

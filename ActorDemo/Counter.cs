@@ -5,25 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using ActorDemo.ActorSystem;
 
-namespace ActorDemo
-{
+namespace ActorDemo {
 
-    public class Counter : Actor
-    {
+    public class Counter : Actor {
 
         private string m_value;
 
-        public Counter() { }
-
-        protected override void Receive(MsgData message)
-        {
+        protected override void Receive( MsgData message ) {
             string msg = message.UnPack();
 
             m_value += msg + "\n";
 
-            if (msg == "stop")
-            {
-                Console.WriteLine(m_value);
+            if( msg == "stop" ) {
+                Console.WriteLine( m_value );
                 Exit();
             }
 

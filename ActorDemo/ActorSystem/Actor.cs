@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ActorDemo.ActorSystem
-{
+namespace ActorDemo.ActorSystem {
 
-    public interface IActor
-    {
+    public interface IActor {
+
         string Name { get; set; }
 
         bool Exited { get; }//是否退出
@@ -17,18 +16,16 @@ namespace ActorDemo.ActorSystem
 
         ActorContext Context { get; }
 
-        void Enqueue(MsgData data);
+        void Enqueue( MsgData data );
 
         void Dequeue();
 
     }
 
-    public abstract class Actor : IActor
-    {
+    public abstract class Actor : IActor {
 
-        protected Actor()
-        {
-            context = new ActorContext(this);
+        protected Actor() {
+            context = new ActorContext( this );
         }
 
         string IActor.Name { get; set; }
@@ -55,30 +52,25 @@ namespace ActorDemo.ActorSystem
 
         private Queue<MsgData> messageQueue = new Queue<MsgData>();
 
-        protected abstract void Receive(MsgData message);
+        protected abstract void Receive( MsgData message );
 
-        void IActor.Enqueue(MsgData message)
-        {
-            if (exited)
+        void IActor.Enqueue( MsgData message ) {
+            if( exited )
                 return;
-            lock (messageQueue)
-            {
-                messageQueue.Enqueue(message);
+            lock( messageQueue ) {
+                messageQueue.Enqueue( message );
             }
         }
 
-        void IActor.Dequeue()
-        {
+        void IActor.Dequeue() {
             MsgData message;
-            lock (messageQueue)
-            {
+            lock( messageQueue ) {
                 message = messageQueue.Dequeue();
             }
-            Receive(message);
+            Receive( message );
         }
 
-        protected void Exit()
-        {
+        protected void Exit() {
             exited = true;
         }
     }
