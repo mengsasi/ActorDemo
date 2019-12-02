@@ -9,6 +9,8 @@ namespace ActorDemo.ActorSystem
 
     public interface IActor
     {
+        string Name { get; set; }
+
         bool Exited { get; }//是否退出
 
         int MessageCount { get; }
@@ -26,6 +28,8 @@ namespace ActorDemo.ActorSystem
         {
             context = new ActorContext(this);
         }
+
+        string IActor.Name { get; set; }
 
         private bool exited = false;
         bool IActor.Exited {
@@ -51,7 +55,14 @@ namespace ActorDemo.ActorSystem
 
         protected abstract void Receive(T message);
 
-        public void Post(T message)
+        public void Send(T message, string targetName)
+        {
+            if (exited)
+                return;
+            Dispatcher.Instance.ReadyToExecute(targetName);
+        }
+
+        public void Enqueue(T message)
         {
             if (exited)
                 return;
@@ -59,7 +70,6 @@ namespace ActorDemo.ActorSystem
             {
                 messageQueue.Enqueue(message);
             }
-            Dispatcher.Instance.ReadyToExecute(this);
         }
 
         void IActor.Execute()

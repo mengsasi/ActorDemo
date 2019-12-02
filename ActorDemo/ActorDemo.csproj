@@ -46,6 +46,7 @@
     <Compile Include="ActorSystem\Actor.cs" />
     <Compile Include="ActorSystem\ActorContext.cs" />
     <Compile Include="ActorSystem\Dispatcher.cs" />
+    <Compile Include="ActorSystem\Supervisor.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
