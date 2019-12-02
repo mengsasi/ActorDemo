@@ -1,2 +1,2 @@
 # ActorDemo
-Actor模型，线程之间用消息交互
+Actor模型，消息传递，简单模拟
